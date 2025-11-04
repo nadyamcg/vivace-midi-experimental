@@ -64,6 +64,16 @@ BenchmarkDotNet.Artifacts/
 project.lock.json
 project.fragment.lock.json
 artifacts/
+bin/
+obj/
+*.user
+*.suo
+*.userprefs
+*.swp
+*.DS_Store
+
+# Avalonia (generated)
+Source/**/Avalonia/
 
 # Tye
 .tye/
@@ -403,6 +413,11 @@ FodyWeavers.xsd
 # JetBrains Rider
 *.sln.iml
 .idea/
+
+# VS Code Rider
+.idea/
+.vscode/
+.vs/
 
 ##
 ## Visual studio for Mac
