@@ -3,18 +3,82 @@
         xmlns:vm="using:Vivace.ViewModels"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="600"
         x:Class="Vivace.Views.MainWindow"
         x:DataType="vm:MainWindowViewModel"
         Icon="/Assets/avalonia-logo.ico"
-        Title="Vivace">
+        Title="Vivace - MIDI Editor"
+        Width="800" Height="600">
 
     <Design.DataContext>
-        <!-- This only sets the DataContext for the previewer in an IDE,
-             to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
         <vm:MainWindowViewModel/>
     </Design.DataContext>
 
-    <TextBlock Text="{Binding Greeting}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+    <DockPanel>
+        <Menu DockPanel.Dock="Top">
+            <MenuItem Header="_File">
+                <MenuItem Header="_Open MIDI File..." Command="{Binding OpenMidiFileCommand}"/>
+            </MenuItem>
+        </Menu>
+
+        <StackPanel Margin="20" Spacing="15">
+            <TextBlock Text="{Binding ErrorMessage}"
+                       Foreground="Red"
+                       IsVisible="{Binding ErrorMessage, Converter={x:Static ObjectConverters.IsNotNull}}"/>
+
+            <StackPanel Spacing="10" IsVisible="{Binding IsFileLoaded}">
+                <TextBlock Text="MIDI File Information" FontSize="18" FontWeight="Bold"/>
+
+                <StackPanel Spacing="5">
+                    <StackPanel Orientation="Horizontal" Spacing="5">
+                        <TextBlock Text="File:" FontWeight="SemiBold"/>
+                        <TextBlock Text="{Binding CurrentMidiFile.FileName}"/>
+                    </StackPanel>
+
+                    <StackPanel Orientation="Horizontal" Spacing="5">
+                        <TextBlock Text="Format:" FontWeight="SemiBold"/>
+                        <TextBlock Text="{Binding CurrentMidiFile.Format}"/>
+                    </StackPanel>
+
+                    <StackPanel Orientation="Horizontal" Spacing="5">
+                        <TextBlock Text="Specification:" FontWeight="SemiBold"/>
+                        <TextBlock Text="{Binding CurrentMidiFile.MidiSpecification}"/>
+                    </StackPanel>
+
+                    <StackPanel Orientation="Horizontal" Spacing="5">
+                        <TextBlock Text="Tracks:" FontWeight="SemiBold"/>
+                        <TextBlock Text="{Binding CurrentMidiFile.TrackCount}"/>
+                    </StackPanel>
+
+                    <StackPanel Orientation="Horizontal" Spacing="5">
+                        <TextBlock Text="Events:" FontWeight="SemiBold"/>
+                        <TextBlock Text="{Binding CurrentMidiFile.EventCount}"/>
+                    </StackPanel>
+
+                    <StackPanel Orientation="Horizontal" Spacing="5">
+                        <TextBlock Text="Tempo Changes:" FontWeight="SemiBold"/>
+                        <TextBlock Text="{Binding CurrentMidiFile.TempoEventCount}"/>
+                    </StackPanel>
+
+                    <StackPanel Orientation="Horizontal" Spacing="5">
+                        <TextBlock Text="Duration:" FontWeight="SemiBold"/>
+                        <TextBlock Text="{Binding CurrentMidiFile.Duration}"/>
+                    </StackPanel>
+
+                    <TextBlock Text="[EMPTY FILE]"
+                               Foreground="Orange"
+                               FontWeight="Bold"
+                               IsVisible="{Binding CurrentMidiFile.IsEmpty}"/>
+                </StackPanel>
+            </StackPanel>
+
+            <TextBlock Text="Open a MIDI file from the File menu to get started"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center"
+                       Foreground="Gray"
+                       Margin="0,100,0,0"
+                       IsVisible="{Binding !IsFileLoaded}"/>
+        </StackPanel>
+    </DockPanel>
 
 </Window>
