@@ -1,2 +1,2 @@
 # vivace-midi
-Fully featured and FOSS MIDI editor written in C#, intended for Linux users.
+A fast, modern MIDI editor intended for Linux users. Not a DAW. Written in C# with Avalonia. 
